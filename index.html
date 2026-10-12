@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📊 الدوال والعلاقات - رياضيات 12 عام | Mr. Mohammed Hesham</title>
+<meta name="description" content="امتحان تفاعلي شامل عن الدوال والعلاقات - رياضيات الصف 12 العام">
+<meta name="author" content="Mr. Mohammed Hesham">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Cairo', sans-serif; }
+body.en-mode { font-family: 'Inter', sans-serif; }
+.arabic-math { font-family: 'Amiri', 'Cairo', serif; }
+.correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+.incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+.timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+@keyframes pulse { 50% { opacity: 0.7; } }
+@media print { .no-print { display: none !important; } }
+.success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+.grade-excellent { background: #dcfce7; color: #166534; }
+.grade-good { background: #fef3c7; color: #92400e; }
+.grade-pass { background: #dbeafe; color: #1e40af; }
+.grade-fail { background: #fee2e2; color: #991b1b; }
+.lang-switch {
+position: fixed; top: 16px; left: 16px; z-index: 100;
+background: white; padding: 6px; border-radius: 30px;
+box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 4px;
+border: 2px solid #7c3aed;
+}
+[dir="ltr"] .lang-switch { left: auto; right: 16px; }
+.lang-btn {
+padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold;
+transition: all 0.3s; border: none; font-size: 0.875rem;
+background: transparent; color: #6b7280;
+}
+.lang-btn.active { background: #7c3aed; color: white; box-shadow: 0 2px 6px rgba(124,58,237,0.4); }
+.lang-btn:hover:not(.active) { background: #f5f3ff; color: #7c3aed; }
+.shuffle-badge {
+display: inline-block;
+background: linear-gradient(135deg, #7c3aed, #6d28d9);
+color: white; padding: 4px 12px; border-radius: 20px;
+font-size: 0.75rem; font-weight: bold; margin-right: 8px;
+}
+.math-display {
+display: inline-block; direction: ltr;
+font-family: 'Amiri', 'Times New Roman', serif;
+font-size: 1.2em; font-style: italic;
+padding: 2px 8px; background: #f5f3ff;
+border-radius: 6px; margin: 2px;
+color: #5b21b6; font-weight: 600; letter-spacing: 0.5px;
+}
+.save-indicator {
+position: fixed; bottom: 20px; left: 20px; z-index: 200;
+background: #10b981; color: white; padding: 8px 16px;
+border-radius: 20px; font-size: 0.8rem; font-weight: bold;
+opacity: 0; transition: opacity 0.3s; pointer-events: none;
+box-shadow: 0 4px 12px rgba(16,185,129,0.4);
+}
+.save-indicator.show { opacity: 1; }
+.formula-box {
+background: #f5f3ff; border: 2px solid #8b5cf6;
+border-radius: 8px; padding: 12px; margin: 10px 0;
+font-family: 'Amiri', serif;
+direction: ltr; text-align: center;
+}
+.svg-graph {
+display: block;
+margin: 12px auto;
+background: white;
+border: 2px solid #e5e7eb;
+border-radius: 12px;
+padding: 8px;
+box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.graph-container { text-align: center; margin: 10px 0; }
+.module-badge {
+display: inline-block;
+padding: 4px 16px;
+border-radius: 20px;
+font-weight: bold;
+font-size: 0.85rem;
+margin-bottom: 8px;
+}
+.module-1 { background: #ede9fe; color: #5b21b6; }
+.module-2 { background: #fef3c7; color: #92400e; }
+.module-3 { background: #dbeafe; color: #1e40af; }
+.module-4 { background: #fce7f3; color: #9f1239; }
+.module-5 { background: #ecfdf5; color: #065f46; }
+.data-table {
+width: 100%; border-collapse: collapse; margin: 10px auto;
+background: white; border-radius: 8px; overflow: hidden;
+box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.data-table th, .data-table td {
+border: 1px solid #e5e7eb; padding: 10px; text-align: center;
+}
+.data-table th { background: #7c3aed; color: white; font-weight: bold; }
+.data-table tr:nth-child(even) { background: #f9fafb; }
+</style>
+</head>
+<body class="bg-gradient-to-br from-violet-50 to-purple-50 text-gray-800 p-4 md:p-8 min-h-screen">
+
+<div class="lang-switch no-print">
+<button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+<button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+</div>
+
+<div id="saveIndicator" class="save-indicator">💾 <span data-ar="تم الحفظ" data-en="Saved">تم الحفظ</span></div>
+
+<div id="timer-container" class="max-w-5xl mx-auto mb-4 text-center no-print">
+<div class="bg-white p-4 rounded-2xl shadow-md inline-block border-2 border-violet-100">
+<span class="text-gray-600 ml-2" data-ar="⏰ الوقت المتبقي:" data-en="⏰ Time Remaining:"> الوقت المتبقي:</span>
+<span id="timer" class="text-2xl font-bold text-violet-700 font-mono">75:00</span>
+<span class="shuffle-badge" data-ar="🎲 أسئلة عشوائية" data-en="🎲 Random Questions">🎲 أسئلة عشوائية</span>
+</div>
+</div>
+
+<div class="max-w-5xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+<button onclick="toggleAnswers()" class="bg-violet-700 hover:bg-violet-800 text-white px-5 py-2 rounded-xl font-medium transition shadow cursor-pointer" data-ar="👀 إظهار / إخفاء الإجابات" data-en="👀 Show / Hide Answers">👀 إظهار / إخفاء الإجابات</button>
+<button onclick="window.print()" class="bg-gray-700 hover:bg-gray-900 text-white px-5 py-2 rounded-xl font-medium transition shadow cursor-pointer" data-ar="🖨️ طباعة" data-en="🖨️ Print">🖨️ طباعة</button>
+<button onclick="reshuffleExam()" class="bg-gradient-to-r from-violet-700 to-purple-600 hover:from-violet-800 hover:to-purple-700 text-white px-5 py-2 rounded-xl font-medium transition shadow cursor-pointer" data-ar="🔄 أسئلة جديدة" data-en=" New Questions">🔄 أسئلة جديدة</button>
+<button onclick="clearProgress()" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-medium transition shadow cursor-pointer" data-ar="🗑️ مسح التقدم" data-en="🗑️ Clear Progress">️ مسح التقدم</button>
+</div>
+
+<header class="max-w-5xl mx-auto bg-white p-6 rounded-2xl shadow-lg mb-8 border-4 border-violet-500">
+<div class="text-center">
+<div class="inline-block bg-violet-700 text-white px-4 py-1 rounded-full text-xs font-bold mb-2">MATH GRADE 12</div>
+<h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-ar="📊 الدوال والعلاقات" data-en="📊 Functions & Relations">📊 الدوال والعلاقات</h1>
+<h2 class="text-lg text-violet-700 font-semibold" data-ar="الصف الثاني عشر العام (رياضيات)" data-en="Grade 12 General (Mathematics)">الصف الثاني عشر العام (رياضيات)</h2>
+<p class="text-sm text-gray-600 mt-2" data-ar="تحديد الدوال، العلاقات الخطية والتربيعية والأسية، تحليل الجداول" data-en="Identifying functions, linear/quadratic/exponential relations, analyzing tables">تحديد الدوال، العلاقات الخطية والتربيعية والأسية، تحليل الجداول</p>
+<p class="text-xs text-green-600 mt-2 font-semibold" data-ar="💾 يتم حفظ تقدمك تلقائياً - 30 سؤالاً في 5 أقسام" data-en="💾 Your progress is saved automatically - 30 questions in 5 sections">💾 يتم حفظ تقدمك تلقائياً - 30 سؤالاً في 5 أقسام</p>
+</div>
+<div class="mt-4 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+<span><span data-ar="📅 التاريخ:" data-en="📅 Date:">📅 التاريخ:</span> <input type="text" id="examDate" class="border-b-2 border-violet-300 bg-transparent w-28 text-center"></span>
+<span><span data-ar="😊 الاسم:" data-en="😊 Name:">😊 الاسم:</span> <input type="text" id="studentName" class="border-b-2 border-violet-300 bg-transparent w-32 text-center" placeholder="اكتب اسمك"></span>
+<span><span data-ar="🏫 الشعبة:" data-en="🏫 Class:"> الشعبة:</span> <input type="text" id="studentClass" class="border-b-2 border-violet-300 bg-transparent w-28 text-center" placeholder="الشعبة"></span>
+<span data-ar="⏰ المدة: 75 دقيقة" data-en="⏰ Duration: 75 min">⏰ المدة: 75 دقيقة</span>
+<span data-ar=" المجموع: 100 درجة" data-en="📊 Total: 100 pts">📊 المجموع: 100 درجة</span>
+</div>
+</header>
+
+<div class="max-w-5xl mx-auto mb-6 bg-white p-4 rounded-xl shadow-md border-2 border-violet-200 no-print">
+<h3 class="font-bold text-lg mb-3 text-violet-800 text-center" data-ar=" القواعد الأساسية" data-en="📐 Key Rules">📐 القواعد الأساسية</h3>
+<div class="grid md:grid-cols-3 gap-3 text-sm">
+<div class="formula-box"><strong>Function:</strong> كل x له y واحد فقط</div>
+<div class="formula-box"><strong>Linear:</strong> y = mx + b (فرق ثابت)</div>
+<div class="formula-box"><strong>Quadratic:</strong> y = ax² + bx + c</div>
+<div class="formula-box"><strong>Exponential:</strong> y = abˣ (نسبة ثابتة)</div>
+<div class="formula-box"><strong>Absolute Value:</strong> y = a|x-h|+k</div>
+<div class="formula-box"><strong>Vertical Line Test</strong></div>
+</div>
+</div>
+
+<main class="max-w-5xl mx-auto space-y-8" id="exam-content"></main>
+
+<div class="text-center no-print pb-8 mt-8">
+<button onclick="gradeExam()" class="bg-gradient-to-r from-violet-700 to-purple-600 hover:from-violet-800 hover:to-purple-700 text-white text-lg px-10 py-4 rounded-2xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar=" صحح إجاباتي!" data-en=" Grade My Answers!">🎯 صحح إجاباتي!</button>
+</div>
+
+<div id="results-panel" class="max-w-5xl mx-auto mt-8 bg-white p-8 rounded-2xl shadow-2xl border-4 border-violet-500 hidden no-print">
+<h2 class="text-3xl font-bold text-gray-900 mb-6 text-center" data-ar="🏆 نتيجتك يا بطل! 🏆" data-en="🏆 Your Results, Champion! ">🏆 نتيجتك يا بطل! 🏆</h2>
+<div class="grid md:grid-cols-3 gap-4 mb-6">
+<div class="bg-violet-50 p-4 rounded-xl text-center"><p data-ar="😊 الاسم" data-en="😊 Name">😊 الاسم</p><p id="res-name" class="font-bold text-xl text-violet-700">-</p></div>
+<div class="bg-purple-50 p-4 rounded-xl text-center"><p data-ar=" التاريخ" data-en="📅 Date">📅 التاريخ</p><p id="res-date" class="font-bold text-xl text-purple-700">-</p></div>
+<div class="bg-violet-50 p-4 rounded-xl text-center"><p data-ar="🌟 المجموع" data-en="🌟 Score">🌟 المجموع</p><p id="res-total" class="font-bold text-3xl text-violet-700">0 / 100</p></div>
+</div>
+<div class="text-center mb-6">
+<span id="success-badge" class="success-badge grade-excellent">-</span>
+<p id="success-percent" class="text-4xl font-bold text-violet-700 mt-2">0%</p>
+<p class="text-sm text-gray-500" data-ar="نسبة النجاح" data-en="Success Rate">نسبة النجاح</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-xl mb-6">
+<h3 class="font-bold text-lg mb-4 text-gray-800" data-ar="📊 أدائك في كل قسم:" data-en="📊 Your Performance:">📊 أدائك في كل قسم:</h3>
+<div class="space-y-3" id="sections-performance"></div>
+</div>
+<div class="text-center mb-6">
+<button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-violet-700 to-purple-600 text-white text-lg px-8 py-3 rounded-2xl font-bold shadow-xl transition cursor-pointer" data-ar="📧 أرسل النتيجة للمعلم" data-en="📧 Send Results to Teacher">📧 أرسل النتيجة للمعلم</button>
+<p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+</div>
+<div class="flex gap-3 justify-center">
+<button onclick="window.print()" class="bg-gray-700 text-white px-6 py-3 rounded-xl font-semibold" data-ar="🖨️ طباعة النتيجة" data-en="🖨️ Print Results">🖨️ طباعة النتيجة</button>
+</div>
+</div>
+
+<footer class="max-w-5xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+© <span data-ar="الدوال والعلاقات - الصف 12" data-en="Functions & Relations - Grade 12">الدوال والعلاقات - الصف 12</span> | Mr. Mohammed Hesham 📊
+</footer>
+
+<script>
+const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+const SERVICE_ID = "service_w15m64i";
+const TEMPLATE_ID = "template_5b0u2tq";
+const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+emailjs.init(PUBLIC_KEY);
+
+const STORAGE_KEY = 'functions_relations_grade12_exam_v1';
+const TOTAL_TIME = 4500;
+const TOTAL_QUESTIONS = 30;
+const TOTAL_SECTIONS = 5;
+const QUESTIONS_PER_SECTION = 6;
+
+let currentSeed = null;
+let answersVisible = false;
+let saveIndicatorTimeout = null;
+
+function mulberry32(a) {
+    return function() {
+        var t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ t >>> 15, t | 1);
+        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    }
+}
+let rng = null;
+
+function showSaveIndicator() {
+    const indicator = document.getElementById('saveIndicator');
+    indicator.classList.add('show');
+    if (saveIndicatorTimeout) clearTimeout(saveIndicatorTimeout);
+    saveIndicatorTimeout = setTimeout(() => indicator.classList.remove('show'), 1500);
+}
+
+function saveState(showIndicator = true) {
+    try {
+        const state = {
+            seed: currentSeed, lang: currentLang,
+            studentName: document.getElementById('studentName').value,
+            studentClass: document.getElementById('studentClass').value,
+            examDate: document.getElementById('examDate').value,
+            answers: getSelectedAnswers(),
+            timeRemaining: timeRemaining,
+            answersVisible: answersVisible, savedAt: Date.now()
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if (showIndicator) showSaveIndicator();
+    } catch (e) { console.error('خطأ في الحفظ:', e); }
+}
+
+function loadState() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : null;
+    } catch (e) { return null; }
+}
+
+function getSelectedAnswers() {
+    const answers = {};
+    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected) answers[i] = selected.value;
+    }
+    return answers;
+}
+
+function restoreAnswers(answers) {
+    if (!answers) return;
+    for (const [idx, val] of Object.entries(answers)) {
+        const radio = document.querySelector(`input[name="q${idx}"][value="${val}"]`);
+        if (radio) radio.checked = true;
+    }
+}
+
+function clearProgress() {
+    const msg = currentLang === 'ar' ? '⚠️ هل أنت متأكد من مسح كل التقدم؟' : '⚠️ Clear all progress?';
+    if (confirm(msg)) { localStorage.removeItem(STORAGE_KEY); location.reload(); }
+}
+
+function setupAnswerListeners() {
+    document.getElementById('exam-content').addEventListener('change', (e) => {
+        if (e.target.type === 'radio') saveState();
+    });
+}
+
+function setupInputListeners() {
+    ['studentName', 'studentClass', 'examDate'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', () => saveState(false));
+            el.addEventListener('blur', () => saveState());
+        }
+    });
+}
+
+// ==================== SVG Diagrams ====================
+const svgGraphs = {
+    function_test: `<svg class="svg-graph" width="400" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="210" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#5b21b6" font-weight="bold"> اختبار الخط الرأسي - Vertical Line Test</text>
+        <line x1="50" y1="180" x2="350" y2="180" stroke="#374151" stroke-width="2"/>
+        <line x1="200" y1="40" x2="200" y2="200" stroke="#374151" stroke-width="2"/>
+        <text x="355" y="175" font-size="11" fill="#374151">x</text>
+        <text x="205" y="35" font-size="11" fill="#374151">y</text>
+        <path d="M 80 160 Q 140 100 200 80 Q 260 100 320 160" fill="none" stroke="#7c3aed" stroke-width="3"/>
+        <line x1="150" y1="40" x2="150" y2="200" stroke="#dc2626" stroke-width="2" stroke-dasharray="4"/>
+        <text x="150" y="35" text-anchor="middle" font-size="10" fill="#dc2626">Vertical Line</text>
+        <circle cx="150" cy="130" r="4" fill="#dc2626"/>
+        <text x="200" y="210" text-anchor="middle" font-size="11" fill="#5b21b6">إذا قطع الخط الرأسي المنحنى في نقطة واحدة فقط → دالة</text>
+    </svg>`,
+    
+    linear_table: `<svg class="svg-graph" width="400" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="210" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold">📊 العلاقة الخطية - Linear</text>
+        <rect x="30" y="50" width="340" height="140" fill="white" stroke="#f59e0b" stroke-width="2"/>
+        <line x1="140" y1="50" x2="140" y2="190" stroke="#f59e0b" stroke-width="2"/>
+        <line x1="30" y1="90" x2="370" y2="90" stroke="#f59e0b" stroke-width="2"/>
+        <line x1="30" y1="130" x2="370" y2="130" stroke="#f59e0b" stroke-width="2"/>
+        <line x1="30" y1="170" x2="370" y2="170" stroke="#f59e0b" stroke-width="2"/>
+        <text x="85" y="75" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">x</text>
+        <text x="255" y="75" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">y</text>
+        <text x="85" y="115" text-anchor="middle" font-size="11" fill="#374151">-3</text>
+        <text x="255" y="115" text-anchor="middle" font-size="11" fill="#374151">-8.8</text>
+        <text x="85" y="155" text-anchor="middle" font-size="11" fill="#374151">-2</text>
+        <text x="255" y="155" text-anchor="middle" font-size="11" fill="#374151">-8.6</text>
+        <text x="85" y="195" text-anchor="middle" font-size="11" fill="#374151">-1</text>
+        <text x="255" y="195" text-anchor="middle" font-size="11" fill="#374151">-8.4</text>
+        <text x="310" y="115" text-anchor="middle" font-size="10" fill="#dc2626">Δy = +0.2</text>
+        <text x="310" y="155" text-anchor="middle" font-size="10" fill="#dc2626">Δy = +0.2</text>
+        <text x="200" y="215" text-anchor="middle" font-size="11" fill="#92400e">فرق y ثابت → علاقة خطية</text>
+    </svg>`,
+    
+    quadratic_table: `<svg class="svg-graph" width="400" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="210" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#1e40af" font-weight="bold">📊 العلاقة التربيعية - Quadratic</text>
+        <rect x="30" y="50" width="340" height="140" fill="white" stroke="#2563eb" stroke-width="2"/>
+        <line x1="140" y1="50" x2="140" y2="190" stroke="#2563eb" stroke-width="2"/>
+        <line x1="250" y1="50" x2="250" y2="190" stroke="#2563eb" stroke-width="2"/>
+        <line x1="30" y1="90" x2="370" y2="90" stroke="#2563eb" stroke-width="2"/>
+        <line x1="30" y1="130" x2="370" y2="130" stroke="#2563eb" stroke-width="2"/>
+        <line x1="30" y1="170" x2="370" y2="170" stroke="#2563eb" stroke-width="2"/>
+        <text x="85" y="75" text-anchor="middle" font-size="12" fill="#1e40af" font-weight="bold">x</text>
+        <text x="195" y="75" text-anchor="middle" font-size="12" fill="#1e40af" font-weight="bold">y</text>
+        <text x="310" y="75" text-anchor="middle" font-size="12" fill="#1e40af" font-weight="bold">Δ²y</text>
+        <text x="85" y="115" text-anchor="middle" font-size="11" fill="#374151">-2</text>
+        <text x="195" y="115" text-anchor="middle" font-size="11" fill="#374151">10</text>
+        <text x="310" y="115" text-anchor="middle" font-size="11" fill="#dc2626">ثابت</text>
+        <text x="85" y="155" text-anchor="middle" font-size="11" fill="#374151">0</text>
+        <text x="195" y="155" text-anchor="middle" font-size="11" fill="#374151">0</text>
+        <text x="310" y="155" text-anchor="middle" font-size="11" fill="#dc2626">ثابت</text>
+        <text x="85" y="195" text-anchor="middle" font-size="11" fill="#374151">2</text>
+        <text x="195" y="195" text-anchor="middle" font-size="11" fill="#374151">10</text>
+        <text x="310" y="195" text-anchor="middle" font-size="11" fill="#dc2626">ثابت</text>
+        <text x="200" y="215" text-anchor="middle" font-size="11" fill="#1e40af">الفرق الثاني ثابت → علاقة تربيعية</text>
+    </svg>`,
+    
+    exponential_table: `<svg class="svg-graph" width="400" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="210" rx="12" fill="#fce7f3" stroke="#ec4899" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#9f1239" font-weight="bold">📊 العلاقة الأسية - Exponential</text>
+        <rect x="30" y="50" width="340" height="140" fill="white" stroke="#ec4899" stroke-width="2"/>
+        <line x1="140" y1="50" x2="140" y2="190" stroke="#ec4899" stroke-width="2"/>
+        <line x1="250" y1="50" x2="250" y2="190" stroke="#ec4899" stroke-width="2"/>
+        <line x1="30" y1="90" x2="370" y2="90" stroke="#ec4899" stroke-width="2"/>
+        <line x1="30" y1="130" x2="370" y2="130" stroke="#ec4899" stroke-width="2"/>
+        <line x1="30" y1="170" x2="370" y2="170" stroke="#ec4899" stroke-width="2"/>
+        <text x="85" y="75" text-anchor="middle" font-size="12" fill="#9f1239" font-weight="bold">x</text>
+        <text x="195" y="75" text-anchor="middle" font-size="12" fill="#9f1239" font-weight="bold">y</text>
+        <text x="310" y="75" text-anchor="middle" font-size="12" fill="#9f1239" font-weight="bold">y₂/y₁</text>
+        <text x="85" y="115" text-anchor="middle" font-size="11" fill="#374151">0</text>
+        <text x="195" y="115" text-anchor="middle" font-size="11" fill="#374151">1</text>
+        <text x="310" y="115" text-anchor="middle" font-size="11" fill="#dc2626">×5</text>
+        <text x="85" y="155" text-anchor="middle" font-size="11" fill="#374151">1</text>
+        <text x="195" y="155" text-anchor="middle" font-size="11" fill="#374151">5</text>
+        <text x="310" y="155" text-anchor="middle" font-size="11" fill="#dc2626">×5</text>
+        <text x="85" y="195" text-anchor="middle" font-size="11" fill="#374151">2</text>
+        <text x="195" y="195" text-anchor="middle" font-size="11" fill="#374151">25</text>
+        <text x="310" y="195" text-anchor="middle" font-size="11" fill="#dc2626">×5</text>
+        <text x="200" y="215" text-anchor="middle" font-size="11" fill="#9f1239">النسبة ثابتة → علاقة أسية</text>
+    </svg>`,
+    
+    ordered_pairs: `<svg class="svg-graph" width="400" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="210" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#065f46" font-weight="bold">📊 الأزواج المرتبة - Ordered Pairs</text>
+        <circle cx="100" cy="80" r="25" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="100" y="85" text-anchor="middle" font-size="11" fill="#065f46">(1, 2)</text>
+        <circle cx="200" cy="80" r="25" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="200" y="85" text-anchor="middle" font-size="11" fill="#065f46">(2, 4)</text>
+        <circle cx="300" cy="80" r="25" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="300" y="85" text-anchor="middle" font-size="11" fill="#065f46">(3, 6)</text>
+        <circle cx="100" cy="160" r="25" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+        <text x="100" y="165" text-anchor="middle" font-size="11" fill="#991b1b">(1, 2)</text>
+        <circle cx="200" cy="160" r="25" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+        <text x="200" y="165" text-anchor="middle" font-size="11" fill="#991b1b">(1, 5)</text>
+        <circle cx="300" cy="160" r="25" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+        <text x="300" y="165" text-anchor="middle" font-size="11" fill="#991b1b">(2, 4)</text>
+        <text x="100" y="115" text-anchor="middle" font-size="10" fill="#065f46" font-weight="bold">✓ دالة</text>
+        <text x="200" y="200" text-anchor="middle" font-size="10" fill="#991b1b" font-weight="bold">✗ ليست دالة</text>
+        <text x="200" y="215" text-anchor="middle" font-size="10" fill="#991b1b">(x=1 له قيمتان)</text>
+    </svg>`,
+    
+    graph_types: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold">📊 أنواع الرسوم البيانية</text>
+        <line x1="30" y1="80" x2="170" y2="80" stroke="#374151" stroke-width="2"/>
+        <line x1="30" y1="40" x2="30" y2="120" stroke="#374151" stroke-width="2"/>
+        <line x1="30" y1="120" x2="170" y2="40" stroke="#2563eb" stroke-width="2"/>
+        <text x="100" y="140" text-anchor="middle" font-size="10" fill="#2563eb" font-weight="bold">Linear</text>
+        <line x1="210" y1="80" x2="350" y2="80" stroke="#374151" stroke-width="2"/>
+        <line x1="210" y1="40" x2="210" y2="120" stroke="#374151" stroke-width="2"/>
+        <path d="M 210 120 Q 280 40 350 120" fill="none" stroke="#dc2626" stroke-width="2"/>
+        <text x="280" y="140" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="bold">Quadratic</text>
+        <line x1="30" y1="200" x2="170" y2="200" stroke="#374151" stroke-width="2"/>
+        <line x1="30" y1="160" x2="30" y2="240" stroke="#374151" stroke-width="2"/>
+        <path d="M 30 230 Q 80 220 130 180 Q 160 160 170 155" fill="none" stroke="#10b981" stroke-width="2"/>
+        <text x="100" y="255" text-anchor="middle" font-size="10" fill="#10b981" font-weight="bold">Exponential</text>
+        <line x1="210" y1="200" x2="350" y2="200" stroke="#374151" stroke-width="2"/>
+        <line x1="210" y1="160" x2="210" y2="240" stroke="#374151" stroke-width="2"/>
+        <path d="M 210 240 L 240 200 L 280 220 L 320 170 L 350 200" fill="none" stroke="#7c3aed" stroke-width="2"/>
+        <text x="280" y="255" text-anchor="middle" font-size="10" fill="#7c3aed" font-weight="bold">Absolute Value</text>
+    </svg>`
+};
+
+// ==================== EXAM DATA - 30 QUESTIONS ====================
+const originalExamData = {
+    sections: [
+        {
+            id: 'sec1',
+            title: { ar: '🔹 القسم 1: تحديد الدوال من الأزواج المرتبة', en: '🔹 Section 1: Identifying Functions from Ordered Pairs' },
+            questions: [
+                {
+                    q: { ar: 'هل المجموعة <span class="math-display">{(-1, 1), (0, -2), (1, -3), (2, -2), (3, 1)}</span> تمثل دالة؟', en: 'Does the set <span class="math-display">{(-1, 1), (0, -2), (1, -3), (2, -2), (3, 1)}</span> represent a function?' },
+                    svg: svgGraphs.ordered_pairs,
+                    options: [
+                        { ar: 'نعم، لأنها دالة تربيعية (كل x له y واحد)', en: 'Yes, it is a quadratic function (each x has one y)' },
+                        { ar: 'لا، لأن بعض قيم y تتكرر', en: 'No, because some y values repeat' },
+                        { ar: 'نعم، لأنها دالة خطية', en: 'Yes, it is a linear function' },
+                        { ar: 'لا، لأن بعض قيم x تتكرر', en: 'No, because some x values repeat' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نعم، كل قيمة x تظهر مرة واحدة فقط. القيم y المتكررة مسموحة في الدالة', en: 'Yes, each x value appears only once. Repeated y values are allowed in a function' }
+                },
+                {
+                    q: { ar: 'هل المجموعة <span class="math-display">{(1, 2.75), (2, 2.5), (3, 2.25), (4, 2)}</span> تمثل دالة؟', en: 'Does the set <span class="math-display">{(1, 2.75), (2, 2.5), (3, 2.25), (4, 2)}</span> represent a function?' },
+                    options: [
+                        { ar: 'نعم، دالة خطية (الميل = -0.25)', en: 'Yes, linear function (slope = -0.25)' },
+                        { ar: 'لا، ليست دالة', en: 'No, not a function' },
+                        { ar: 'نعم، دالة تربيعية', en: 'Yes, quadratic function' },
+                        { ar: 'نعم، دالة أسية', en: 'Yes, exponential function' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نعم، كل x له y واحد. الفرق في y ثابت (-0.25) → دالة خطية', en: 'Yes, each x has one y. Constant difference in y (-0.25) → linear function' }
+                },
+                {
+                    q: { ar: 'هل المجموعة <span class="math-display">{(-3, 0.25), (-2, 0.5), (-1, 1), (0, 2)}</span> تمثل دالة؟', en: 'Does the set <span class="math-display">{(-3, 0.25), (-2, 0.5), (-1, 1), (0, 2)}</span> represent a function?' },
+                    options: [
+                        { ar: 'نعم، دالة أسية (y تتضاعف)', en: 'Yes, exponential function (y doubles)' },
+                        { ar: 'لا، لأن y تتضاعف', en: 'No, because y doubles' },
+                        { ar: 'نعم، دالة خطية', en: 'Yes, linear function' },
+                        { ar: 'نعم، دالة تربيعية', en: 'Yes, quadratic function' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نعم، كل x له y واحد. y تتضاعف مع كل زيادة في x → دالة أسية', en: 'Yes, each x has one y. y doubles with each x increase → exponential function' }
+                },
+                {
+                    q: { ar: 'هل المجموعة <span class="math-display">{(-3, -11), (-2, -5), (-1, -3), (0, -5)}</span> تمثل دالة؟', en: 'Does the set <span class="math-display">{(-3, -11), (-2, -5), (-1, -3), (0, -5)}</span> represent a function?' },
+                    options: [
+                        { ar: 'نعم، دالة تربيعية (تناظرية)', en: 'Yes, quadratic function (symmetric)' },
+                        { ar: 'لا، لأن y = -5 تتكرر', en: 'No, because y = -5 repeats' },
+                        { ar: 'نعم، دالة خطية', en: 'Yes, linear function' },
+                        { ar: 'نعم، دالة أسية', en: 'Yes, exponential function' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نعم، كل x له y واحد. القيم y متناظرة حول x = -1 → دالة تربيعية', en: 'Yes, each x has one y. y values symmetric around x = -1 → quadratic function' }
+                },
+                {
+                    q: { ar: 'هل المجموعة <span class="math-display">{(-2, 6), (-1, 1), (0, -4), (1, -9)}</span> تمثل دالة؟', en: 'Does the set <span class="math-display">{(-2, 6), (-1, 1), (0, -4), (1, -9)}</span> represent a function?' },
+                    options: [
+                        { ar: 'نعم، دالة خطية (الميل = -5)', en: 'Yes, linear function (slope = -5)' },
+                        { ar: 'لا، لأن y تتناقص', en: 'No, because y decreases' },
+                        { ar: 'نعم، دالة تربيعية', en: 'Yes, quadratic function' },
+                        { ar: 'نعم، دالة أسية', en: 'Yes, exponential function' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نعم، كل x له y واحد. الفرق في y ثابت (-5) → دالة خطية', en: 'Yes, each x has one y. Constant difference in y (-5) → linear function' }
+                },
+                {
+                    q: { ar: 'هل المجموعة <span class="math-display">{(-1, 8), (0, 2), (1, 0.5), (2, 0.125)}</span> تمثل دالة؟', en: 'Does the set <span class="math-display">{(-1, 8), (0, 2), (1, 0.5), (2, 0.125)}</span> represent a function?' },
+                    options: [
+                        { ar: 'نعم، دالة أسية (y تضرب في 1/4)', en: 'Yes, exponential function (y multiplied by 1/4)' },
+                        { ar: 'لا، لأن y تتناقص بسرعة', en: 'No, because y decreases rapidly' },
+                        { ar: 'نعم، دالة خطية', en: 'Yes, linear function' },
+                        { ar: 'نعم، دالة تربيعية', en: 'Yes, quadratic function' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نعم، كل x له y واحد. y تضرب في 1/4 مع كل زيادة في x → دالة أسية', en: 'Yes, each x has one y. y multiplied by 1/4 with each x increase → exponential function' }
+                }
+            ]
+        },
+        {
+            id: 'sec2',
+            title: { ar: '🔹 القسم 2: تحليل الجداول - خطية وتربيعية', en: '🔹 Section 2: Table Analysis - Linear & Quadratic' },
+            questions: [
+                {
+                    q: { ar: 'الجدول: x = {-3, -2, -1, 0}, y = {-8.8, -8.6, -8.4, -8.2}. ما نوع العلاقة؟', en: 'Table: x = {-3, -2, -1, 0}, y = {-8.8, -8.6, -8.4, -8.2}. What type of relation?' },
+                    svg: svgGraphs.linear_table,
+                    options: [
+                        { ar: 'خطية (Linear) - فرق y ثابت = +0.2', en: 'Linear - constant y difference = +0.2' },
+                        { ar: 'تربيعية (Quadratic)', en: 'Quadratic' },
+                        { ar: 'أسية (Exponential)', en: 'Exponential' },
+                        { ar: 'ليست دالة', en: 'Not a function' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الفرق في y ثابت (+0.2) → علاقة خطية', en: 'Constant difference in y (+0.2) → linear relation' }
+                },
+                {
+                    q: { ar: 'الجدول: x = {-2, -1, 0, 1, 2}, y = {10, 2.5, 0, 2.5, 10}. ما نوع العلاقة؟', en: 'Table: x = {-2, -1, 0, 1, 2}, y = {10, 2.5, 0, 2.5, 10}. What type of relation?' },
+                    svg: svgGraphs.quadratic_table,
+                    options: [
+                        { ar: 'تربيعية (Quadratic) - متناظرة حول x=0', en: 'Quadratic - symmetric around x=0' },
+                        { ar: 'خطية (Linear)', en: 'Linear' },
+                        { ar: 'أسية (Exponential)', en: 'Exponential' },
+                        { ar: 'قيمة مطلقة', en: 'Absolute value' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'القيم متناظرة حول x=0 والفرق الثاني ثابت → علاقة تربيعية', en: 'Values symmetric around x=0 and second difference constant → quadratic relation' }
+                },
+                {
+                    q: { ar: 'الجدول: x = {-1, 0, 1, 2, 3}, y = {0.75, 3, 12, 48, 192}. ما نوع العلاقة؟', en: 'Table: x = {-1, 0, 1, 2, 3}, y = {0.75, 3, 12, 48, 192}. What type of relation?' },
+                    options: [
+                        { ar: 'أسية (Exponential) - y تضرب في 4', en: 'Exponential - y multiplied by 4' },
+                        { ar: 'خطية (Linear)', en: 'Linear' },
+                        { ar: 'تربيعية (Quadratic)', en: 'Quadratic' },
+                        { ar: 'لوغاريتمية', en: 'Logarithmic' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'y تضرب في 4 مع كل زيادة في x → علاقة أسية y = 3·4ˣ', en: 'y multiplied by 4 with each x increase → exponential relation y = 3·4ˣ' }
+                },
+                {
+                    q: { ar: 'الجدول: x = {-2, -1, 0, 1, 2}, y = {0.008, 0.04, 0.2, 1, 5}. ما نوع العلاقة؟', en: 'Table: x = {-2, -1, 0, 1, 2}, y = {0.008, 0.04, 0.2, 1, 5}. What type of relation?' },
+                    options: [
+                        { ar: 'أسية (Exponential) - y تضرب في 5', en: 'Exponential - y multiplied by 5' },
+                        { ar: 'خطية (Linear)', en: 'Linear' },
+                        { ar: 'تربيعية (Quadratic)', en: 'Quadratic' },
+                        { ar: 'تكعيبية', en: 'Cubic' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'y تضرب في 5 مع كل زيادة في x → علاقة أسية y = 0.2·5ˣ', en: 'y multiplied by 5 with each x increase → exponential relation y = 0.2·5ˣ' }
+                },
+                {
+                    q: { ar: 'الجدول: x = {0, 1, 2, 3, 4}, y = {0, 4.2, 16.8, 37.8, 67.2}. ما نوع العلاقة؟', en: 'Table: x = {0, 1, 2, 3, 4}, y = {0, 4.2, 16.8, 37.8, 67.2}. What type of relation?' },
+                    options: [
+                        { ar: 'تربيعية (Quadratic) - y = 2.1x²', en: 'Quadratic - y = 2.1x²' },
+                        { ar: 'خطية (Linear)', en: 'Linear' },
+                        { ar: 'أسية (Exponential)', en: 'Exponential' },
+                        { ar: 'تكعيبية', en: 'Cubic' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'y/x² = 4.2/1 = 16.8/4 = 37.8/9 = 4.2... لا، y = 2.1x² → تربيعية', en: 'y/x² = 4.2/1 = 16.8/4 = 4.2... y = 2.1x² → quadratic' }
+                },
+                {
+                    q: { ar: 'الجدول: x = {-3, -2, -1, 0, 1}, y = {14.75, 9.75, 4.75, -0.25, -5.25}. ما نوع العلاقة؟', en: 'Table: x = {-3, -2, -1, 0, 1}, y = {14.75, 9.75, 4.75, -0.25, -5.25}. What type of relation?' },
+                    options: [
+                        { ar: 'خطية (Linear) - فرق y = -5', en: 'Linear - y difference = -5' },
+                        { ar: 'تربيعية (Quadratic)', en: 'Quadratic' },
+                        { ar: 'أسية (Exponential)', en: 'Exponential' },
+                        { ar: 'لوغاريتمية', en: 'Logarithmic' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الفرق في y ثابت (-5) → علاقة خطية y = -5x - 0.25', en: 'Constant difference in y (-5) → linear relation y = -5x - 0.25' }
+                }
+            ]
+        },
+        {
+            id: 'sec3',
+            title: { ar: '🔹 القسم 3: الدوال الخطية والتربيعية', en: '🔹 Section 3: Linear & Quadratic Functions' },
+            questions: [
+                {
+                    q: { ar: 'ما ميل الخط المستقيم الذي يمر بالنقطتين (1, 3) و (4, 9)؟', en: 'What is the slope of the line passing through (1, 3) and (4, 9)?' },
+                    svg: svgGraphs.graph_types,
+                    options: [
+                        { ar: '<span class="math-display">2</span>', en: '<span class="math-display">2</span>' },
+                        { ar: '<span class="math-display">3</span>', en: '<span class="math-display">3</span>' },
+                        { ar: '<span class="math-display">6</span>', en: '<span class="math-display">6</span>' },
+                        { ar: '<span class="math-display">1/2</span>', en: '<span class="math-display">1/2</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'm = (9-3)/(4-1) = 6/3 = 2', en: 'm = (9-3)/(4-1) = 6/3 = 2' }
+                },
+                {
+                    q: { ar: 'ما معادلة الخط المستقيم الذي ميله 3 ويقطع محور y عند (0, -2)؟', en: 'What is the equation of the line with slope 3 and y-intercept (0, -2)?' },
+                    options: [
+                        { ar: '<span class="math-display">y = 3x - 2</span>', en: '<span class="math-display">y = 3x - 2</span>' },
+                        { ar: '<span class="math-display">y = 3x + 2</span>', en: '<span class="math-display">y = 3x + 2</span>' },
+                        { ar: '<span class="math-display">y = -3x + 2</span>', en: '<span class="math-display">y = -3x + 2</span>' },
+                        { ar: '<span class="math-display">y = 2x - 3</span>', en: '<span class="math-display">y = 2x - 3</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'y = mx + b = 3x + (-2) = 3x - 2', en: 'y = mx + b = 3x + (-2) = 3x - 2' }
+                },
+                {
+                    q: { ar: 'ما رأس القطع المكافئ y = (x - 3)² + 2؟', en: 'What is the vertex of parabola y = (x - 3)² + 2?' },
+                    options: [
+                        { ar: '<span class="math-display">(3, 2)</span>', en: '<span class="math-display">(3, 2)</span>' },
+                        { ar: '<span class="math-display">(-3, 2)</span>', en: '<span class="math-display">(-3, 2)</span>' },
+                        { ar: '<span class="math-display">(3, -2)</span>', en: '<span class="math-display">(3, -2)</span>' },
+                        { ar: '<span class="math-display">(2, 3)</span>', en: '<span class="math-display">(2, 3)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الرأس (h, k) = (3, 2) من الصيغة y = a(x-h)² + k', en: 'Vertex (h, k) = (3, 2) from form y = a(x-h)² + k' }
+                },
+                {
+                    q: { ar: 'ما اتجاه فتح القطع المكافئ y = -2x² + 4x - 1؟', en: 'What is the opening direction of parabola y = -2x² + 4x - 1?' },
+                    options: [
+                        { ar: 'للأسفل (لأن a = -2 < 0)', en: 'Downward (because a = -2 < 0)' },
+                        { ar: 'للأعلى', en: 'Upward' },
+                        { ar: 'لليمين', en: 'Rightward' },
+                        { ar: 'لليسار', en: 'Leftward' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'a = -2 < 0، إذن القطع المكافئ مفتوح للأسفل', en: 'a = -2 < 0, so parabola opens downward' }
+                },
+                {
+                    q: { ar: 'ما جذور المعادلة x² - 5x + 6 = 0؟', en: 'What are the roots of x² - 5x + 6 = 0?' },
+                    options: [
+                        { ar: '<span class="math-display">x = 2 و x = 3</span>', en: '<span class="math-display">x = 2 and x = 3</span>' },
+                        { ar: '<span class="math-display">x = -2 و x = -3</span>', en: '<span class="math-display">x = -2 and x = -3</span>' },
+                        { ar: '<span class="math-display">x = 1 و x = 6</span>', en: '<span class="math-display">x = 1 and x = 6</span>' },
+                        { ar: '<span class="math-display">x = -1 و x = -6</span>', en: '<span class="math-display">x = -1 and x = -6</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '(x-2)(x-3) = 0 → x = 2 أو x = 3', en: '(x-2)(x-3) = 0 → x = 2 or x = 3' }
+                },
+                {
+                    q: { ar: 'ما المميز (Discriminant) للمعادلة x² - 4x + 4 = 0؟', en: 'What is the discriminant of x² - 4x + 4 = 0?' },
+                    options: [
+                        { ar: '<span class="math-display">0</span> (جذر مكرر)', en: '<span class="math-display">0</span> (repeated root)' },
+                        { ar: '<span class="math-display">16</span>', en: '<span class="math-display">16</span>' },
+                        { ar: '<span class="math-display">-16</span>', en: '<span class="math-display">-16</span>' },
+                        { ar: '<span class="math-display">8</span>', en: '<span class="math-display">8</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'Δ = b² - 4ac = 16 - 16 = 0 → جذر مكرر واحد', en: 'Δ = b² - 4ac = 16 - 16 = 0 → one repeated root' }
+                }
+            ]
+        },
+        {
+            id: 'sec4',
+            title: { ar: '🔹 القسم 4: الدوال الأسية واللوغاريتمية', en: '🔹 Section 4: Exponential & Logarithmic Functions' },
+            questions: [
+                {
+                    q: { ar: 'ما قيمة <span class="math-display">2³</span>؟', en: 'What is <span class="math-display">2³</span>?' },
+                    options: [
+                        { ar: '<span class="math-display">8</span>', en: '<span class="math-display">8</span>' },
+                        { ar: '<span class="math-display">6</span>', en: '<span class="math-display">6</span>' },
+                        { ar: '<span class="math-display">9</span>', en: '<span class="math-display">9</span>' },
+                        { ar: '<span class="math-display">4</span>', en: '<span class="math-display">4</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '2³ = 2 × 2 × 2 = 8', en: '2³ = 2 × 2 × 2 = 8' }
+                },
+                {
+                    q: { ar: 'ما قيمة <span class="math-display">log₂(8)</span>؟', en: 'What is <span class="math-display">log₂(8)</span>?' },
+                    options: [
+                        { ar: '<span class="math-display">3</span>', en: '<span class="math-display">3</span>' },
+                        { ar: '<span class="math-display">2</span>', en: '<span class="math-display">2</span>' },
+                        { ar: '<span class="math-display">4</span>', en: '<span class="math-display">4</span>' },
+                        { ar: '<span class="math-display">8</span>', en: '<span class="math-display">8</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'log₂(8) = 3 لأن 2³ = 8', en: 'log₂(8) = 3 because 2³ = 8' }
+                },
+                {
+                    q: { ar: 'الدالة <span class="math-display">f(x) = 3·2ˣ</span> عند x = 4 تساوي:', en: 'Function <span class="math-display">f(x) = 3·2ˣ</span> at x = 4 equals:' },
+                    options: [
+                        { ar: '<span class="math-display">48</span>', en: '<span class="math-display">48</span>' },
+                        { ar: '<span class="math-display">24</span>', en: '<span class="math-display">24</span>' },
+                        { ar: '<span class="math-display">12</span>', en: '<span class="math-display">12</span>' },
+                        { ar: '<span class="math-display">96</span>', en: '<span class="math-display">96</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'f(4) = 3·2⁴ = 3·16 = 48', en: 'f(4) = 3·2⁴ = 3·16 = 48' }
+                },
+                {
+                    q: { ar: 'ما الخط المقارب الأفقي للدالة <span class="math-display">f(x) = 2ˣ + 3</span>؟', en: 'What is the horizontal asymptote of <span class="math-display">f(x) = 2ˣ + 3</span>?' },
+                    options: [
+                        { ar: '<span class="math-display">y = 3</span>', en: '<span class="math-display">y = 3</span>' },
+                        { ar: '<span class="math-display">y = 0</span>', en: '<span class="math-display">y = 0</span>' },
+                        { ar: '<span class="math-display">y = 2</span>', en: '<span class="math-display">y = 2</span>' },
+                        { ar: '<span class="math-display">x = 3</span>', en: '<span class="math-display">x = 3</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عندما x → -∞، 2ˣ → 0، إذن y → 3', en: 'As x → -∞, 2ˣ → 0, so y → 3' }
+                },
+                {
+                    q: { ar: 'إذا كانت <span class="math-display">log(x) + log(2) = log(10)</span>، فما x؟', en: 'If <span class="math-display">log(x) + log(2) = log(10)</span>, what is x?' },
+                    options: [
+                        { ar: '<span class="math-display">5</span>', en: '<span class="math-display">5</span>' },
+                        { ar: '<span class="math-display">8</span>', en: '<span class="math-display">8</span>' },
+                        { ar: '<span class="math-display">12</span>', en: '<span class="math-display">12</span>' },
+                        { ar: '<span class="math-display">20</span>', en: '<span class="math-display">20</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'log(2x) = log(10) → 2x = 10 → x = 5', en: 'log(2x) = log(10) → 2x = 10 → x = 5' }
+                },
+                {
+                    q: { ar: 'نمو بكتيري يتضاعف كل ساعة. بدأت بـ 100. كم بعد 5 ساعات؟', en: 'Bacterial growth doubles every hour. Started with 100. How many after 5 hours?' },
+                    options: [
+                        { ar: '<span class="math-display">3200</span>', en: '<span class="math-display">3200</span>' },
+                        { ar: '<span class="math-display">500</span>', en: '<span class="math-display">500</span>' },
+                        { ar: '<span class="math-display">1600</span>', en: '<span class="math-display">1600</span>' },
+                        { ar: '<span class="math-display">6400</span>', en: '<span class="math-display">6400</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '100 × 2⁵ = 100 × 32 = 3200', en: '100 × 2⁵ = 100 × 32 = 3200' }
+                }
+            ]
+        },
+        {
+            id: 'sec5',
+            title: { ar: '🔹 القسم 5: تطبيقاتMixed', en: '🔹 Section 5: Mixed Applications' },
+            questions: [
+                {
+                    q: { ar: 'أي من التالي يمثل دالة؟', en: 'Which of the following represents a function?' },
+                    svg: svgGraphs.function_test,
+                    options: [
+                        { ar: '{(1, 2), (2, 3), (3, 4)}', en: '{(1, 2), (2, 3), (3, 4)}' },
+                        { ar: '{(1, 2), (1, 3), (2, 4)}', en: '{(1, 2), (1, 3), (2, 4)}' },
+                        { ar: '{(1, 2), (2, 3), (2, 4)}', en: '{(1, 2), (2, 3), (2, 4)}' },
+                        { ar: '{(1, 2), (1, 2), (1, 3)}', en: '{(1, 2), (1, 2), (1, 3)}' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'كل x له y واحد فقط في الخيار A', en: 'Each x has only one y in option A' }
+                },
+                {
+                    q: { ar: 'مجال الدالة <span class="math-display">f(x) = √(x-2)</span> هو:', en: 'Domain of <span class="math-display">f(x) = √(x-2)</span> is:' },
+                    options: [
+                        { ar: '<span class="math-display">x ≥ 2</span>', en: '<span class="math-display">x ≥ 2</span>' },
+                        { ar: '<span class="math-display">x > 2</span>', en: '<span class="math-display">x > 2</span>' },
+                        { ar: 'كل الأعداد الحقيقية', en: 'All real numbers' },
+                        { ar: '<span class="math-display">x ≤ 2</span>', en: '<span class="math-display">x ≤ 2</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'يجب أن يكون x - 2 ≥ 0 → x ≥ 2', en: 'Must have x - 2 ≥ 0 → x ≥ 2' }
+                },
+                {
+                    q: { ar: 'مدى الدالة <span class="math-display">f(x) = x²</span> هو:', en: 'Range of <span class="math-display">f(x) = x²</span> is:' },
+                    options: [
+                        { ar: '<span class="math-display">y ≥ 0</span>', en: '<span class="math-display">y ≥ 0</span>' },
+                        { ar: 'كل الأعداد الحقيقية', en: 'All real numbers' },
+                        { ar: '<span class="math-display">y > 0</span>', en: '<span class="math-display">y > 0</span>' },
+                        { ar: '<span class="math-display">y ≤ 0</span>', en: '<span class="math-display">y ≤ 0</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'مربع أي عدد حقيقي ≥ 0', en: 'Square of any real number ≥ 0' }
+                },
+                {
+                    q: { ar: 'الدالة <span class="math-display">f(x) = |x - 3| + 2</span> لها رأس عند:', en: 'Function <span class="math-display">f(x) = |x - 3| + 2</span> has vertex at:' },
+                    options: [
+                        { ar: '<span class="math-display">(3, 2)</span>', en: '<span class="math-display">(3, 2)</span>' },
+                        { ar: '<span class="math-display">(-3, 2)</span>', en: '<span class="math-display">(-3, 2)</span>' },
+                        { ar: '<span class="math-display">(3, -2)</span>', en: '<span class="math-display">(3, -2)</span>' },
+                        { ar: '<span class="math-display">(2, 3)</span>', en: '<span class="math-display">(2, 3)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'الرأس (h, k) = (3, 2) من الصيغة y = a|x-h|+k', en: 'Vertex (h, k) = (3, 2) from form y = a|x-h|+k' }
+                },
+                {
+                    q: { ar: 'إذا كانت <span class="math-display">f(x) = 2x + 1</span> و <span class="math-display">g(x) = x²</span>، فما f(g(3))؟', en: 'If <span class="math-display">f(x) = 2x + 1</span> and <span class="math-display">g(x) = x²</span>, what is f(g(3))?' },
+                    options: [
+                        { ar: '<span class="math-display">19</span>', en: '<span class="math-display">19</span>' },
+                        { ar: '<span class="math-display">7</span>', en: '<span class="math-display">7</span>' },
+                        { ar: '<span class="math-display">81</span>', en: '<span class="math-display">81</span>' },
+                        { ar: '<span class="math-display">15</span>', en: '<span class="math-display">15</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'g(3) = 9, f(9) = 2(9) + 1 = 19', en: 'g(3) = 9, f(9) = 2(9) + 1 = 19' }
+                },
+                {
+                    q: { ar: 'الدالة العكسية لـ <span class="math-display">f(x) = 2x + 3</span> هي:', en: 'Inverse function of <span class="math-display">f(x) = 2x + 3</span> is:' },
+                    options: [
+                        { ar: '<span class="math-display">f⁻¹(x) = (x-3)/2</span>', en: '<span class="math-display">f⁻¹(x) = (x-3)/2</span>' },
+                        { ar: '<span class="math-display">f⁻¹(x) = 2x - 3</span>', en: '<span class="math-display">f⁻¹(x) = 2x - 3</span>' },
+                        { ar: '<span class="math-display">f⁻¹(x) = (x+3)/2</span>', en: '<span class="math-display">f⁻¹(x) = (x+3)/2</span>' },
+                        { ar: '<span class="math-display">f⁻¹(x) = 1/(2x+3)</span>', en: '<span class="math-display">f⁻¹(x) = 1/(2x+3)</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'y = 2x + 3 → x = (y-3)/2 → f⁻¹(x) = (x-3)/2', en: 'y = 2x + 3 → x = (y-3)/2 → f⁻¹(x) = (x-3)/2' }
+                }
+            ]
+        }
+    ]
+};
+
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+let examData;
+let correctAnswersMap = {};
+let currentLang = 'ar';
+let timeRemaining = TOTAL_TIME;
+let timerInterval;
+
+function prepareShuffledExam() {
+    rng = mulberry32(currentSeed);
+    examData = JSON.parse(JSON.stringify(originalExamData));
+    correctAnswersMap = {};
+    let globalIdx = 0;
+    examData.sections.forEach((section) => {
+        section.questions = shuffleArray(section.questions);
+        section.questions.forEach((q) => {
+            const optionsWithCorrect = q.options.map((opt, idx) => ({ option: opt, isCorrect: idx === q.correct }));
+            const shuffledOptions = shuffleArray(optionsWithCorrect);
+            q.options = shuffledOptions.map(o => o.option);
+            q.correct = shuffledOptions.findIndex(o => o.isCorrect);
+            correctAnswersMap[globalIdx] = String.fromCharCode(97 + q.correct);
+            globalIdx++;
+        });
+    });
+}
+
+function reshuffleExam() {
+    const msg = currentLang === 'ar' ? '🔄 سيتم إنشاء أسئلة جديدة ومسح إجاباتك الحالية. هل أنت متأكد؟' : '🔄 New questions will be generated and current answers cleared. Are you sure?';
+    if (confirm(msg)) {
+        currentSeed = Date.now(); timeRemaining = TOTAL_TIME; answersVisible = false;
+        prepareShuffledExam(); renderExam(); saveState();
+        alert(currentLang === 'ar' ? '🎲 تم تغيير الأسئلة! حظاً موفقاً! 🍀' : ' Questions changed! Good luck! 🍀');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.body.classList.toggle('en-mode', lang === 'en');
+    document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+        el.innerHTML = lang === 'ar' ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+    });
+    renderExam(); saveState(false);
+}
+
+function renderExam() {
+    const container = document.getElementById('exam-content');
+    const labels = { ar: { option: ['أ', 'ب', 'ج', 'د'], answer: '✅ الإجابة:' }, en: { option: ['A', 'B', 'C', 'D'], answer: '✅ Answer:' } };
+    const lbl = labels[currentLang]; const isRTL = currentLang === 'ar';
+    let html = ''; let globalIdx = 0;
+    examData.sections.forEach((section) => {
+        html += `<section class="bg-white p-6 rounded-2xl shadow-lg border-2 border-violet-100">
+            <h2 class="text-xl font-bold mb-4 text-violet-700">${section.title[currentLang]}</h2>
+            <ol class="space-y-4 text-sm">`;
+        section.questions.forEach((q) => {
+            const bs = isRTL ? 'border-r-4 pr-4' : 'border-l-4 pl-4';
+            html += `<li class="${bs} border-violet-400 py-2" id="q-${globalIdx}">
+                <strong class="text-violet-700">${globalIdx + 1}.</strong> <span class="arabic-math">${q.q[currentLang]}</span><br>`;
+            if (q.svg) html += `<div class="graph-container">${q.svg}</div>`;
+            q.options.forEach((opt, oIdx) => {
+                const rs = isRTL ? 'mr-4 ml-2' : 'ml-4 mr-2';
+                html += `<label class="cursor-pointer block mt-2 ${isRTL ? 'mr-4' : 'ml-4'} hover:bg-violet-50 rounded-lg p-2 transition">
+                    <input type="radio" name="q${globalIdx}" value="${String.fromCharCode(97 + oIdx)}" class="${rs}">
+                    <span class="arabic-math">${lbl.option[oIdx]}) ${opt[currentLang]}</span>
+                </label>`;
+            });
+            html += `<div class="answer-box text-green-700 mt-3 font-medium ${answersVisible ? '' : 'hidden'} bg-green-50 rounded-lg p-3 border border-green-200">
+                ${lbl.answer} ${lbl.option[q.correct]}) <span class="arabic-math">${q.options[q.correct][currentLang]}</span><br>
+                <span class="text-sm text-green-700 mt-2 block arabic-math">${q.answer[currentLang]}</span>
+            </div></li>`;
+            globalIdx++;
+        });
+        html += `</ol></section>`;
+    });
+    container.innerHTML = html;
+}
+
+function startTimer() {
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+        timeRemaining--; updateTimerDisplay();
+        if (timeRemaining % 60 === 0) saveState(false);
+        if (timeRemaining <= 600) document.getElementById('timer').classList.add('timer-warning');
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert(currentLang === 'ar' ? "⏰ انتهى الوقت!" : "⏰ Time's up!");
+            gradeExam();
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const m = Math.floor(timeRemaining / 60); const s = timeRemaining % 60;
+    document.getElementById('timer').textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+}
+
+function toggleAnswers() {
+    answersVisible = !answersVisible;
+    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden', !answersVisible));
+    saveState(false);
+}
+
+function gradeExam() {
+    let correctCount = 0;
+    const sectionScores = new Array(TOTAL_SECTIONS).fill(0);
+    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+        const sel = document.querySelector(`input[name="q${i}"]:checked`);
+        const li = document.getElementById(`q-${i}`);
+        if (li) {
+            const isCorrect = sel && sel.value === correctAnswersMap[i];
+            if (isCorrect) { correctCount++; li.classList.add('correct'); li.classList.remove('incorrect'); sectionScores[Math.floor(i / QUESTIONS_PER_SECTION)]++; }
+            else { li.classList.add('incorrect'); li.classList.remove('correct'); }
+        }
+    }
+    const score = Math.round((correctCount / TOTAL_QUESTIONS) * 100);
+    document.getElementById('res-total').textContent = `${score} / 100`;
+    document.getElementById('res-name').textContent = document.getElementById('studentName').value || (currentLang === 'ar' ? 'بطل' : 'Champion');
+    document.getElementById('res-date').textContent = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-AE' : 'en-US');
+    const pc = document.getElementById('sections-performance'); pc.innerHTML = '';
+    examData.sections.forEach((s, idx) => {
+        pc.innerHTML += `<div class="flex justify-between items-center"><span class="text-gray-700">${s.title[currentLang]}</span><span class="font-bold text-violet-700">${sectionScores[idx]}/${QUESTIONS_PER_SECTION}</span></div>`;
+    });
+    const badge = document.getElementById('success-badge');
+    document.getElementById('success-percent').textContent = `${score}%`;
+    if (currentLang === 'ar') {
+        if (score >= 90) { badge.textContent = '🌟 ممتاز جداً!'; badge.className = 'success-badge grade-excellent'; }
+        else if (score >= 75) { badge.textContent = '👏 ممتاز!'; badge.className = 'success-badge grade-good'; }
+        else if (score >= 50) { badge.textContent = ' جيد'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = '💪 حاول مرة أخرى'; badge.className = 'success-badge grade-fail'; }
+    } else {
+        if (score >= 90) { badge.textContent = ' Outstanding!'; badge.className = 'success-badge grade-excellent'; }
+        else if (score >= 75) { badge.textContent = '👏 Excellent!'; badge.className = 'success-badge grade-good'; }
+        else if (score >= 50) { badge.textContent = '👍 Good'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = '💪 Try Again'; badge.className = 'success-badge grade-fail'; }
+    }
+    document.getElementById('results-panel').classList.remove('hidden');
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+    if (timerInterval) clearInterval(timerInterval);
+}
+
+function sendResultsToEmail() {
+    const btn = document.getElementById('sendEmailBtn');
+    const status = document.getElementById('emailStatus');
+    btn.disabled = true;
+    btn.textContent = currentLang === 'ar' ? '⏳ جاري الإرسال...' : '⏳ Sending...';
+    const name = document.getElementById('studentName').value || 'N/A';
+    const studentClass = document.getElementById('studentClass').value || 'N/A';
+    const date = document.getElementById('examDate').value || new Date().toLocaleDateString();
+    const score = document.getElementById('res-total').textContent;
+    const successRate = document.getElementById('success-percent').textContent;
+    const badge = document.getElementById('success-badge').textContent;
+    let questionsHTML = ''; let globalIdx = 0;
+    examData.sections.forEach((section, sectionIdx) => {
+        questionsHTML += `<tr style="background:linear-gradient(135deg,#7c3aed,#6d28d9);color:white;"><td colspan="5" style="padding:12px;font-weight:bold;">📌 ${currentLang==='ar'?'القسم':'Section'} ${sectionIdx+1}: ${section.title[currentLang]}</td></tr>`;
+        section.questions.forEach((q) => {
+            const sel = document.querySelector(`input[name="q${globalIdx}"]:checked`);
+            const sv = sel ? sel.value : null; const cv = correctAnswersMap[globalIdx]; const ic = sv === cv;
+            let sat = currentLang==='ar'?' لم يجب':'❌ No answer'; let sac = '#dc2626';
+            if (sv) { const si = sv.charCodeAt(0)-97; sat = q.options[si][currentLang]; sac = ic?'#059669':'#dc2626'; }
+            const cat = q.options[q.correct][currentLang];
+            const rb = ic?'#f0fdf4':'#fef2f2'; const bl = ic?'4px solid #10b981':'4px solid #ef4444';
+            questionsHTML += `<tr style="background:${rb};border-right:${bl};"><td style="padding:10px;border:1px solid #e5e7eb;text-align:center;font-weight:bold;">${globalIdx+1}</td><td style="padding:10px;border:1px solid #e5e7eb;"><strong style="color:#5b21b6;">${currentLang==='ar'?'❓ السؤال:':'❓ Question:'}</strong><br><span style="font-size:13px;">${q.q[currentLang]}</span></td><td style="padding:10px;border:1px solid #e5e7eb;"><strong style="color:${sac};">${currentLang==='ar'?'✍️ إجابة الطالب:':'✍️ Student:'}</strong><br><span style="color:${sac};font-size:13px;">${sat}</span></td><td style="padding:10px;border:1px solid #e5e7eb;"><strong style="color:#059669;">${currentLang==='ar'?'✅ الصحيحة:':'✅ Correct:'}</strong><br><span style="color:#059669;font-size:13px;">${cat}</span></td><td style="padding:10px;border:1px solid #e5e7eb;text-align:center;">${ic?'<span style="font-size:24px;">✅</span>':'<span style="font-size:24px;">❌</span>'}</td></tr>`;
+            globalIdx++;
+        });
+    });
+    const answersHTML = `<div style="font-family:'Segoe UI',Tahoma,Arial;direction:${currentLang==='ar'?'rtl':'ltr'};"><div style="background:linear-gradient(135deg,#7c3aed,#6d28d9);color:white;padding:20px;border-radius:10px 10px 0 0;text-align:center;"><h2 style="margin:0;">📊 ${currentLang==='ar'?'نتيجة امتحان الدوال والعلاقات':'Functions & Relations Exam Result'}</h2><p style="margin:5px 0 0;opacity:0.9;">Grade 12 General - Mathematics</p></div><div style="background:#f5f3ff;padding:15px;"><table style="width:100%;border-collapse:collapse;"><tr><td style="padding:8px;font-weight:bold;color:#5b21b6;">${currentLang==='ar'?'😊 الاسم:':'😊 Name:'}</td><td style="padding:8px;">${name}</td><td style="padding:8px;font-weight:bold;color:#5b21b6;">${currentLang==='ar'?'🏫 الشعبة:':'🏫 Class:'}</td><td style="padding:8px;">${studentClass}</td></tr><tr><td style="padding:8px;font-weight:bold;color:#5b21b6;">${currentLang==='ar'?'📅 التاريخ:':'📅 Date:'}</td><td style="padding:8px;">${date}</td><td style="padding:8px;font-weight:bold;color:#5b21b6;">${currentLang==='ar'?'🏆 التقدير:':' Grade:'}</td><td style="padding:8px;">${badge}</td></tr></table></div><div style="background:white;padding:20px;text-align:center;"><div style="display:inline-block;margin:0 15px;"><div style="font-size:32px;font-weight:bold;color:#7c3aed;">${score}</div><div style="color:#6b7280;font-size:13px;">${currentLang==='ar'?'الدرجة':'Score'}</div></div><div style="display:inline-block;margin:0 15px;"><div style="font-size:32px;font-weight:bold;color:#059669;">${successRate}%</div><div style="color:#6b7280;font-size:13px;">${currentLang==='ar'?'النسبة':'Rate'}</div></div></div><table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr style="background:#7c3aed;color:white;"><th style="padding:10px;border:1px solid #6d28d9;">#</th><th style="padding:10px;border:1px solid #6d28d9;">${currentLang==='ar'?'السؤال':'Question'}</th><th style="padding:10px;border:1px solid #6d28d9;">${currentLang==='ar'?'إجابة الطالب':'Student'}</th><th style="padding:10px;border:1px solid #6d28d9;">${currentLang==='ar'?'الصحيحة':'Correct'}</th><th style="padding:10px;border:1px solid #6d28d9;">${currentLang==='ar'?'النتيجة':'Result'}</th></tr></thead><tbody>${questionsHTML}</tbody></table><div style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);padding:15px;border-radius:0 0 10px 10px;"><p style="margin:0;color:#5b21b6;text-align:center;">📊 <strong>${currentLang==='ar'?'أحسنت يا بطل! استمر في إتقان الرياضيات!':'Great job! Keep mastering Mathematics!'}</strong> 📊</p><p style="margin:5px 0 0;color:#5b21b6;text-align:center;font-size:12px;">${currentLang==='ar'?'تم الإرسال تلقائياً | Mr. Mohammed Hesham':'Auto-sent | Mr. Mohammed Hesham'}</p></div></div>`;
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, { to_email: TARGET_EMAIL, student_name: name, student_class: studentClass, exam_date: date, total_score: score, success_rate: successRate, grade: badge, answers_table: answersHTML }).then(() => {
+        status.textContent = currentLang==='ar'?'✅ تم الإرسال بنجاح!':'✅ Sent successfully!'; status.style.color = '#059669'; btn.textContent = currentLang==='ar'?'✓ تم':'✓ Sent';
+    }).catch(err => {
+        status.textContent = currentLang==='ar'?'❌ حدث خطأ':'❌ Error'; status.style.color = '#dc2626'; btn.disabled = false; btn.textContent = currentLang==='ar'?' حاول مرة أخرى':'📧 Try Again'; console.error(err);
+    });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const saved = loadState();
+    if (saved && saved.seed) {
+        currentSeed = saved.seed; currentLang = saved.lang || 'ar';
+        timeRemaining = saved.timeRemaining !== undefined ? saved.timeRemaining : TOTAL_TIME;
+        answersVisible = saved.answersVisible || false;
+        document.documentElement.lang = currentLang;
+        document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+        document.getElementById('btn-ar').classList.toggle('active', currentLang === 'ar');
+        document.getElementById('btn-en').classList.toggle('active', currentLang === 'en');
+        document.body.classList.toggle('en-mode', currentLang === 'en');
+        document.querySelectorAll('[data-ar][data-en]').forEach(el => { el.innerHTML = currentLang === 'ar' ? el.getAttribute('data-ar') : el.getAttribute('data-en'); });
+    } else { currentSeed = Date.now(); }
+    prepareShuffledExam(); renderExam();
+    if (saved) {
+        if (saved.studentName) document.getElementById('studentName').value = saved.studentName;
+        if (saved.studentClass) document.getElementById('studentClass').value = saved.studentClass;
+        if (saved.examDate) document.getElementById('examDate').value = saved.examDate;
+        if (saved.answers) restoreAnswers(saved.answers);
+    }
+    setupAnswerListeners(); setupInputListeners(); startTimer();
+});
+window.addEventListener('beforeunload', () => saveState(false));
+</script>
+</body>
+</html>
